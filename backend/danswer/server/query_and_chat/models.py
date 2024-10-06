@@ -53,6 +53,14 @@ class ChatFeedbackRequest(BaseModel):
     is_positive: bool | None = None
     feedback_text: str | None = None
     predefined_feedback: str | None = None
+    correct_code: str | None = None
+    rating: int | None = None
+    print("inside query_and_chat.models.py")
+    print("feedback_text ", feedback_text)
+    print("predefined_feedback ", predefined_feedback)
+    print("correct_code ", correct_code)
+    print("rating ", rating)
+
 
     @model_validator(mode="after")
     def check_is_positive_or_feedback_text(self) -> "ChatFeedbackRequest":

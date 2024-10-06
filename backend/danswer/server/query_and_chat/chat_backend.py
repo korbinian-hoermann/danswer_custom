@@ -366,7 +366,13 @@ def create_chat_feedback(
     db_session: Session = Depends(get_session),
 ) -> None:
     user_id = user.id if user else None
-
+    print(f"test in create_chat_feedback")
+    print(f"feedback: {feedback}")
+    print(f"feedback.is_positive: {feedback.is_positive}")
+    print(f"feedback.feedback_text: {feedback.feedback_text}")
+    print(f"feedback.predefined_feedback: {feedback.predefined_feedback}")
+    print(f"feedback.correct_code: {feedback.correct_code}")
+    print(f"feedback.rating: {feedback.rating}")
     create_chat_message_feedback(
         is_positive=feedback.is_positive,
         feedback_text=feedback.feedback_text,
@@ -374,6 +380,8 @@ def create_chat_feedback(
         chat_message_id=feedback.chat_message_id,
         user_id=user_id,
         db_session=db_session,
+        correct_code=feedback.correct_code,
+        rating=feedback.rating,
     )
 
 

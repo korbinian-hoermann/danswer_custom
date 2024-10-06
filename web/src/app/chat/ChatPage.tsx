@@ -1307,7 +1307,9 @@ export function ChatPage({
     messageId: number,
     feedbackType: FeedbackType,
     feedbackDetails: string,
-    predefinedFeedback: string | undefined
+    correctCode: string | undefined,
+    predefinedFeedback: string | undefined,
+    rating: number | undefined
   ) => {
     if (chatSessionIdRef.current === null) {
       return;
@@ -1317,7 +1319,9 @@ export function ChatPage({
       messageId,
       feedbackType,
       feedbackDetails,
-      predefinedFeedback
+      correctCode,
+      predefinedFeedback,
+      rating
     );
 
     if (response.ok) {
@@ -1548,12 +1552,14 @@ export function ChatPage({
         <FeedbackModal
           feedbackType={currentFeedback[0]}
           onClose={() => setCurrentFeedback(null)}
-          onSubmit={({ message, predefinedFeedback }) => {
+          onSubmit={({ message, correctCode, predefinedFeedback, rating }) => {
             onFeedback(
               currentFeedback[1],
               currentFeedback[0],
               message,
-              predefinedFeedback
+              correctCode,
+              predefinedFeedback,
+              rating
             );
             setCurrentFeedback(null);
           }}

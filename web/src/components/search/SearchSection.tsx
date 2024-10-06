@@ -557,7 +557,9 @@ export const SearchSection = ({
       messageId,
       feedbackType,
       feedbackDetails,
-      predefinedFeedback
+      correctCode,
+      predefinedFeedback,
+      rating
     );
 
     if (response.ok) {

@@ -240,7 +240,9 @@ export async function handleChatFeedback(
   messageId: number,
   feedback: FeedbackType,
   feedbackDetails: string,
-  predefinedFeedback: string | undefined
+  correctCode: string | undefined,
+  predefinedFeedback: string | undefined,
+  rating: number | undefined
 ) {
   const response = await fetch("/api/chat/create-chat-message-feedback", {
     method: "POST",
@@ -251,7 +253,9 @@ export async function handleChatFeedback(
       chat_message_id: messageId,
       is_positive: feedback === "like",
       feedback_text: feedbackDetails,
-      predefined_feedback: predefinedFeedback,
+      correct_code: correctCode,
+      predefined_feedback: "dummy",
+      rating: rating,
     }),
   });
   return response;

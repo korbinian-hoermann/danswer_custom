@@ -234,12 +234,14 @@ def delete_document_feedback_for_documents__no_commit(
 def create_chat_message_feedback(
     is_positive: bool | None,
     feedback_text: str | None,
+    correct_code: str | None,
     chat_message_id: int,
     user_id: UUID | None,
     db_session: Session,
     # Slack user requested help from human
     required_followup: bool | None = None,
-    predefined_feedback: str | None = None,  # Added predefined_feedback parameter
+    predefined_feedback: str | None = None,
+    rating: int | None = None,
 ) -> None:
     if (
         is_positive is None
@@ -262,7 +264,10 @@ def create_chat_message_feedback(
         feedback_text=feedback_text,
         required_followup=required_followup,
         predefined_feedback=predefined_feedback,
+        correct_code=correct_code,
+        rating=rating,
     )
 
+    print("message_feedback: ", message_feedback)
     db_session.add(message_feedback)
     db_session.commit()
