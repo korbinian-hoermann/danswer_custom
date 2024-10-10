@@ -10,6 +10,7 @@ import {
   LikeFeedbackIcon,
 } from "@/components/icons/icons";
 
+
 const predefinedPositiveFeedbackOptions =
   process.env.NEXT_PUBLIC_POSITIVE_PREDEFINED_FEEDBACK_OPTIONS?.split(",") ||
   [];
@@ -21,6 +22,7 @@ const predefinedNegativeFeedbackOptions =
   ];
 const resultQualityOptions = [
   "Correct",
+  "Functional correct (but can be improved)",
   "Partly correct (can be improved)",
   "Completely wrong",
 ];
@@ -83,6 +85,10 @@ const handleSubmit = () => {
     onClose();
   };
 
+  const handleRatingClick = (value: number) => {
+    setRating(value);
+  };
+
   const predefinedFeedbackOptions =
     feedbackType === "like"
       ? predefinedPositiveFeedbackOptions
@@ -107,6 +113,23 @@ const handleSubmit = () => {
           </div>
           Provide additional feedback
         </h2>
+
+        <div className="mb-4">
+          <label className="block mb-1">Difficulty of the task (1: very easy - 5: very hard):</label>
+          <div className="flex justify-start">
+            {[1, 2, 3, 4, 5].map((value) => (
+              <button
+                key={value}
+                className={`bg-border hover:bg-hover text-default py-2 px-4 rounded m-1
+                  ${rating === value && "ring-2 ring-accent"}`}
+                onClick={() => handleRatingClick(value)}
+              >
+                {value}
+              </button>
+            ))}
+          </div>
+          {isRatingMissing && <p className="text-red-500">Rating is required</p>}
+        </div>
 
         <div className="mb-4">
           <label className="block mb-1">Quality of the result:</label>
@@ -139,17 +162,6 @@ const handleSubmit = () => {
             ))}
           </div>
         </div>
-
-        <div className="mb-4">
-          <label className="block mb-1">Upload additional files which would have contained relevant information:</label>
-          <input
-            type="file"
-            multiple
-            onChange={handleFileChange}
-            className="border border-border-strong rounded py-2 px-4 w-full"
-          />
-        </div>
-
 
         <textarea
           autoFocus
@@ -203,6 +215,16 @@ const handleSubmit = () => {
           }}
         />
 
+        <div className="mb-4">
+          <label className="block mb-1">Upload additional files which would have contained relevant information:</label>
+          <input
+            type="file"
+            multiple
+            onChange={handleFileChange}
+            className="border border-border-strong rounded py-2 px-4 w-full"
+          />
+        </div>
+
         <div className="flex mt-2">
           <button
             className="bg-accent text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none mx-auto"
@@ -211,11 +233,6 @@ const handleSubmit = () => {
             Submit feedback
           </button>
         </div>
-        {isRatingMissing && (
-        <div className="text-red-500 text-center mt-2">
-          A rating is required to submit feedback.
-        </div>
-        )}
       </>
     </ModalWrapper>
   );
